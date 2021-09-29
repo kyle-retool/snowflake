@@ -1,5 +1,10 @@
 var snowflake = require('snowflake-sdk');
 
+const SNOWFLAKE_ACCOUNT = process.env.SNOWFLAKE_ACCOUNT;
+const SNOWFLAKE_DATABASE = process.env.SNOWFLAKE_DATABASE;
+const SNOWFLAKE_TOKEN = process.env.SNOWFLAKE_TOKEN;
+const SNOWFLAKE_USERNAME = process.env.SNOWFLAKE_USERNAME;
+
 function execute(conn, sqlText, binds = []) {
   return new Promise((resolve, reject) => {
     conn.execute({
@@ -38,12 +43,11 @@ async function findConnectionLimit() {
   while (true) {
     console.log('Creating connection...');
     const connection = snowflake.createConnection({
-      account: 'lo46504',
-      username: 'anthonyg',
-      // password: process.env.SNOWFLAKE_PASSWORD,
+      account: SNOWFLAKE_ACCOUNT,
+      username: SNOWFLAKE_USERNAME,
       authenticator: 'OAUTH',
-      token: process.env.SNOWFLAKE_TOKEN,
-      database: 'testdb',
+      token: SNOWFLAKE_TOKEN,
+      database: SNOWFLAKE_DATABASE,
     });
 
     console.log('Connecting...');
@@ -63,12 +67,11 @@ async function findConnectionLimit() {
 async function runConncurrentQueries() {
   console.log('Creating connection...');
   const connection = snowflake.createConnection({
-    account: 'lo46504',
+    account: SNOWFLAKE_ACCOUNT,
+    username: SNOWFLAKE_USERNAME,
     authenticator: 'OAUTH',
-    token: process.env.SNOWFLAKE_TOKEN,
-    username: 'anthonyg',
-    // password: process.env.SNOWFLAKE_PASSWORD,
-    database: 'testdb',
+    token: SNOWFLAKE_TOKEN,
+    database: SNOWFLAKE_DATABASE,
   });
 
   console.log('Connecting...');
